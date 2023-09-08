@@ -2,15 +2,12 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField,IntegerField,StringField, IntegerField
 from wtforms.validators import InputRequired, NumberRange
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-
-class NewProductForm(FlaskForm):
+class ProductForm():
     nombre = StringField(
                         "Ingrese nombre del producto" ,
                         validators=[
                             InputRequired(message='nombre requerido')
                                     ]
-                        
-                        
                         )
     precio =IntegerField("Ingrese el precio del producto",
                          validators=[
@@ -24,6 +21,8 @@ class NewProductForm(FlaskForm):
                                         )
                                      ]
                         )
+
+class NewProductForm(FlaskForm, ProductForm):
     imagen = FileField (label="Imagen del pproducto ",
                         validators=[FileRequired(message="Se requiere la imagen"),
                                     FileAllowed(
@@ -34,3 +33,6 @@ class NewProductForm(FlaskForm):
                                     ]
                        )
     submit =SubmitField("Guardar")
+class EditProductForm(FlaskForm, 
+                      ProductForm):
+    submit =SubmitField("Actualizar")
